@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    container_name: my_database
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  react-app:
+    build: .
+    container_name: my-app
+    ports:
+      - "8000:80000"
+    depends_on:
+      - db
+
+volumes:
+  db-data:
